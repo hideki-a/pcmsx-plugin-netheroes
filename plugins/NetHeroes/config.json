@@ -1,0 +1,29 @@
+{
+    "label": "NetHeroes",
+    "id": "netheroes",
+    "component": "NetHeroes",
+    "description": "",
+    "version": "1.0",
+    "author": "Hideki Abe",
+    "author_link": "",
+    "callbacks": {
+        "netheroes_pre_listing_entry": {
+            "entry": {
+                "pre_listing": {
+                    "component": "NetHeroes",
+                    "priority": 5,
+                    "method": "pre_listing_entry"
+                }
+            }
+        },
+        "netheroes_pre_save_entry": {
+            "entry": {
+                "pre_save": {
+                    "component": "NetHeroes",
+                    "priority": 10,
+                    "method": "pre_save_entry"
+                }
+            }
+        }
+    }
+}
