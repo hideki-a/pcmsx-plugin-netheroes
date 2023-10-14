@@ -6,6 +6,15 @@
     "version": "1.0",
     "author": "Hideki Abe",
     "author_link": "",
+    "hooks": {
+        "netheroes_post_init": {
+            "post_init": {
+                "component": "NetHeroes",
+                "priority": 1,
+                "method": "post_init"
+            }
+        }
+    },
     "callbacks": {
         "netheroes_pre_listing_entry": {
             "entry": {

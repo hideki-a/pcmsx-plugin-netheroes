@@ -11,6 +11,42 @@ class NetHeroes extends PTPlugin {
     }
 
     /**
+     * PADOのpre_loadコールバックでの処理（モデル：entry）
+     *
+     * @access public
+     * @param array $cb
+     * @param PADO $pado
+     * @param PADOMySQL $obj
+     * @return bool
+     */
+    public function db_pre_load_entry( &$cb, $pado, &$obj ) {
+        // 全文検索ページの時、クエリにmroonga_snippet_html関数を差し込む
+        if (
+            strpos( $cb[ 'sql' ], 'SELECT COUNT' ) === false &&
+            strpos( $cb[ 'sql' ], 'IN BOOLEAN MODE' ) !== false
+        ) {
+            $keyword = $cb[ 'values' ][ 2 ]; // NOTE: クエリが変わらない限り位置は変わらないだろうからとりあえず
+            $replace = ", mroonga_snippet_html( `entry_search_text`, '{$keyword}' AS query ) AS mroonga_snippet FROM";
+            $cb[ 'sql' ] = str_replace( 'FROM', $replace, $cb[ 'sql' ] );
+        }
+
+        return true;
+    }
+
+    /**
+     * post_initフックでの処理
+     *
+     * @access public
+     * @param Prototype $app
+     * @return void
+     */
+    public function post_init( &$app ) {
+        if ( preg_match( '/^\/search\/mroonga.html/u', $app->request_uri ) ) {
+            $app->db->register_callback( 'entry', 'pre_load', 'db_pre_load_entry', 5, $this );
+        }
+    }
+
+    /**
      * 記事一覧取得前の処理
      *
      * @access public
