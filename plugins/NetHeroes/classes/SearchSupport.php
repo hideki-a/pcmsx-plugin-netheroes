@@ -14,7 +14,7 @@ class SearchSupport
     public static function adjustKeywords(string $keyword): string
     {
         $adoptedKeywords = [];
-        $normalizedKeyword = preg_replace('/　/', ' ', $keyword);
+        $normalizedKeyword = mb_convert_kana($keyword, 'asKV');
         $keywords = explode(' ', $normalizedKeyword);
 
         $mecab = new Mecab\Tagger();
