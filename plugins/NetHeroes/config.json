@@ -11,7 +11,7 @@
             "post_init": {
                 "component": "NetHeroes",
                 "priority": 1,
-                "method": "post_init"
+                "method": "postInit"
             }
         }
     },
@@ -21,7 +21,7 @@
                 "pre_listing": {
                     "component": "NetHeroes",
                     "priority": 5,
-                    "method": "pre_listing_entry"
+                    "method": "preListingEntry"
                 }
             }
         },
@@ -30,7 +30,7 @@
                 "pre_save": {
                     "component": "NetHeroes",
                     "priority": 10,
-                    "method": "pre_save_entry"
+                    "method": "preSaveEntry"
                 }
             }
         }
