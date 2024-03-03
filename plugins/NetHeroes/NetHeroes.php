@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once LIB_DIR . 'Prototype' . DS . 'class.PTPlugin.php';
+require_once 'classes' . DS . 'SearchSupport.php';
 require_once LIB_DIR . 'php-markdown' . DS . 'Michelf' . DS . 'Markdown.inc.php';
 
 use Michelf\Markdown;
@@ -62,7 +63,8 @@ class NetHeroes extends PTPlugin
         // Mroonga検索ページの処理
         if (preg_match('/^\/search\/mroonga.html/u', $app->request_uri)) {
             if ($app->param('keyword')) {
-                $query = '*D+ ' . preg_replace('/　/u', ' ', $app->param('keyword'));
+                $keywords = NetHeroes\SearchSupport::adjustKeywords($app->param('keyword'));
+                $query = "*D+ {$keywords}";
                 $extra .= <<<EOQ
     AND MATCH( `entry_title`,`entry_search_text`) AGAINST (? IN BOOLEAN MODE)
     ORDER BY MATCH( `entry_title`,`entry_search_text`) AGAINST (? IN BOOLEAN MODE) DESC
