@@ -43,6 +43,9 @@ class SearchSupport
                         $adoptedKeywords[] = $stack;
                         $stack = '';
                     }
+                } elseif ($feature[6] === '*') {
+                    // 英数字の固有名詞
+                    $stack .= $node->getSurface();
                 } else {
                     $stack .= $feature[6];
                 }
